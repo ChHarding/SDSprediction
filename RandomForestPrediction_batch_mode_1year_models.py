@@ -68,7 +68,7 @@ def predict(t, q):
 
 
 # MAIN
-workspace = "SDS_detection_ArcGISPro_project.gdb" # must contain all featureclasses
+workspace = r"..\SDS_detection_ArcGISPro_project\SDS_detection_ArcGISPro_project.gdb" # must contain all featureclasses
 
 # list of dates and feature class names for it
 ''' list of all dates, copy/paste the dates you want into the model and prediction lists below
