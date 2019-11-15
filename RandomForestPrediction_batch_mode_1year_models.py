@@ -1,4 +1,7 @@
 # Batch run making models and predicting them
+# Chris Harding,  Nov 2019
+# Code after Mohsin's Defense, working on full paper
+
 import sys
 import numpy as NUM
 import numpy as np
