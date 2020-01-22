@@ -541,7 +541,7 @@ workspace = r"SDS_detection_ArcGISPro_project.gdb"
 
 # Names of explanatory variables as shown in the fc attribute table
 #expl_vars = ['MEAN_1', 'MEAN_2', 'MEAN_3', 'MEAN_4', 'Rotation'] 
-expl_vars = ['Rotation'] 
+expl_vars = ['Rotation', 'x', 'y'] 
 for n in range(1,5):
     for v in ["MEAN", "STD", "MIN", "MAX", "MEDIAN"]:
         expl_vars.append(v + "_" + str(n))
@@ -584,7 +584,7 @@ dates = [
 #   parameters for grid search optimization
 #   report dictionary (ordered)
 
-'''
+
 # Configuration 1: predict all dates from all others dates using single date models
 prediction_list = [] # list of all predictions to be worked on
 for d1 in dates:
@@ -603,11 +603,11 @@ for d1 in dates:
             "resp_var": "SDS",
             "tuned_model": None,
 
-            "grid_params": {    'n_estimators': [5, 10, 20, 30, 40, 50, 60, 70],
-                                'max_features': [1, 2, 4, 6, 8, 10],
-                                'max_depth': [3, 4, 5, 7, 9, 15],
-                                'min_samples_leaf': [1,3,10],
-                                'class_weight': ['balanced'], # 
+            "grid_params": {'n_estimators': [5, 10, 20, 30, 40, 50, 60, 70, 80, 90],
+                            'max_features': [1, 3, 6, 9, 12, 15, 18],
+                            'max_depth': [3, 5, 7, 9, 11, 13, 15],
+                            'min_samples_leaf': [1,3,5],
+                            'class_weight': ['balanced'],
                             },
 #            "grid_params": {    'n_estimators': [10, 40, 70],
 #                                'max_features': [2, 4],
@@ -621,8 +621,8 @@ for d1 in dates:
 
 add_NDVI = False  # calculate NDVI for each date?
 no_same_date = False # set to True to remove dates from models that are also predicted
+repname = "1_from_1_25vars
 '''
-
 # Configuration 2: predict all dates from a multi-date model
 prediction_list = [] # list of all predictions to be worked on
 
@@ -665,6 +665,7 @@ for pd in pred_date_list:
 #prediction_list = prediction_list[0:1]
 
 repname = "1_from_all_23vars"
+'''
 
 # test writing of csv
 try:
