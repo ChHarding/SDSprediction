@@ -604,7 +604,7 @@ for d1 in dates:
             "tuned_model": None,
 
             "grid_params": {'n_estimators': [5, 10, 20, 30, 40, 50, 60, 70, 80, 90],
-                            'max_features': [1, 3, 6, 9, 12, 15, 18],
+                            'max_features': [1, 3, 6, 9, 12, 15, 18], # rule of thumb: sq.root of num vars, small reduces overfitting
                             'max_depth': [3, 5, 7, 9, 11, 13, 15],
                             'min_samples_leaf': [1,3,5],
                             'class_weight': ['balanced'],
@@ -621,7 +621,7 @@ for d1 in dates:
 
 add_NDVI = False  # calculate NDVI for each date?
 no_same_date = False # set to True to remove dates from models that are also predicted
-repname = "1_from_1_25vars
+repname = "1_from_1_25vars"
 '''
 # Configuration 2: predict all dates from a multi-date model
 prediction_list = [] # list of all predictions to be worked on
