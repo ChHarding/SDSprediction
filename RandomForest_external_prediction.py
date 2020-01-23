@@ -281,7 +281,9 @@ def tune_model(prediction_dict, data_dict):
     printLog("best parameters", best_params)
 
     # put param values in report
-    for bp in ["n_estimators", 'max_features', "max_depth", 'min_samples_leaf']: 
+    grid_params2 = p["grid_params"].copy() # make a copy, just to be safe ...
+    del grid_params2['class_weight'] # remove class_weight
+    for bp in grid_params2: 
         rep[bp] = "%d" % best_params[bp]
 
 
@@ -602,13 +604,22 @@ for d1 in dates:
             "add_NDVI": False,
             "resp_var": "SDS",
             "tuned_model": None,
-
             "grid_params": {'n_estimators': [5, 10, 20, 30, 40, 50, 60, 70, 80, 90],
-                            'max_features': [1, 3, 6, 9, 12, 15, 18], # rule of thumb: sq.root of num vars, small reduces overfitting
-                            'max_depth': [3, 5, 7, 9, 11, 13, 15],
-                            'min_samples_leaf': [1,3,5],
+                            'max_features': [1,3,6], # rule of thumb: sq.root of num of vars, small reduces overfitting
+                            #'max_depth': [3, 5, 7, 9, 11, 13, 15], # None, split until min_samples_split is reached
+                            'min_samples_split':[0.025, 0.05, 0.075], # samples needed for split internal node, in %
+                            'min_samples_leaf': [0.025, 0.05, 0.075], # samples at leaf, in %
                             'class_weight': ['balanced'],
                             },
+
+            #"grid_params": {'n_estimators': [5, 10, 20, 30, 40, 50, 60, 70, 80, 90],
+            #                'max_features': [1, 3, 6, 9, 12, 15, 18], # rule of thumb: sq.root of num vars, small reduces overfitting
+            #                'max_depth': [3, 5, 7, 9, 11, 13, 15], # None, split until min_samples_split is reached
+            #                'min_samples_leaf': [1,3,5],
+            #                'class_weight': ['balanced'],
+            #               },
+                            # min_samples_split
+
 #            "grid_params": {    'n_estimators': [10, 40, 70],
 #                                'max_features': [2, 4],
 #                                'max_depth': [5, 7, 10],
@@ -621,7 +632,7 @@ for d1 in dates:
 
 add_NDVI = False  # calculate NDVI for each date?
 no_same_date = False # set to True to remove dates from models that are also predicted
-repname = "1_from_1_25vars"
+repname = "1_from_1_25vars_v2"
 '''
 # Configuration 2: predict all dates from a multi-date model
 prediction_list = [] # list of all predictions to be worked on
@@ -703,7 +714,8 @@ cols = ["model_dates",
         "resp_var",
         "n_estimators", 
         'max_features', 
-        "max_depth", 
+        #"max_depth", 
+        'min_samples_split',
         'min_samples_leaf', 
         "n_total",
         "n_training",
